@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" style="height:100%">
 	<head>
-		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107203086-1"></script>
-		<script>
-		  window.dataLayer = window.dataLayer || [];
-		  function gtag(){dataLayer.push(arguments)};
-		  gtag('js', new Date());
-		  gtag('config', 'UA-107203086-1');
-		</script>
 		<title>MedTechHeart</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -31,8 +24,8 @@
 		<script src="js/zinc_3js_renderer.js"></script>
 		<script src="js/show_hide_answer.js" ></script>
 		<script src="js/Add3DLabel.js" ></script>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/dojo/1.11.2/dojo/dojo.js" data-dojo-config="async: 1, parseOnLoad: true" ></script>
-		<!-- <script src="../../dojo-release-1.11.2/dojo/dojo.js" data-dojo-config="async: 1, parseOnLoad: true" ></script>-->
+		<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/dojo/1.11.2/dojo/dojo.js" data-dojo-config="async: 1, parseOnLoad: true" ></script> -->
+		<script src="../../dojo-release-1.11.2/dojo/dojo.js" data-dojo-config="async: 1, parseOnLoad: true" ></script>
 		<script>
 			var dojoConfig = {
 		        async: true,
@@ -657,7 +650,10 @@
 					Improving diagnosis and management of heart diseases <br>using personalised biomechanics and image-driven computer modelling
 				</div>
 				<div id="about_us_video" class="open">
-					<iframe id="iframe1" style="top:20%;left:5%;width:90%;height:70%;position:absolute;" src="https://www.youtube.com/embed/FazkF5oQTU0?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+					<video id="about_us" poster="images/heart_v7/video_placeholder.png" controls controlslist="nodownload" style="top:20%;left:10%;width:80%;position:absolute;">
+						<source src="videos/heartresearchvideo.mp4">
+							Your browser does not support the video tag.
+					</video>
 				</div>
 			</div>
 			<div id="ourTeam" class="closed">
@@ -739,7 +735,7 @@
 			"failure_line","failure_box", "attack_moderate_line", "attack_moderate_box",
 			"failure_compensated_line","failure_compensated_box","attack_severe_line",
 			"attack_severe_box","failure_decompensated_line","failure_decompensated_box"];
-		var videoNameIds = ["exercise","diet","smoking","aspirin","statin","heart","blockage"];
+		var videoNameIds = ["exercise","diet","smoking","aspirin","statin","heart","blockage","about_us"];
 		var modelToSceneArray = [];
 		var previousCamera = undefined;
 		// Insert Youtube API;
@@ -748,9 +744,9 @@
 		var firstScriptTag = document.getElementsByTagName('script')[0];
 		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-		function onYouTubePlayerAPIReady() {
-			iframe1 = new YT.Player('iframe1');
-		}
+		// function onYouTubePlayerAPIReady() {
+		// 	iframe1 = new YT.Player('iframe1');
+		// }
 
 		function ExitFullScreen(id){
 			if (document.exitFullscreen){
@@ -1144,11 +1140,10 @@
 			document.getElementById("our_team_icon").className="aboutUsButtons open";
 			document.getElementById("our_team_selected_icon").className="aboutUsButtons closed";
 			document.getElementById("about_us_video").className = "open";
-			// showAboutUsVideo();
+			showAboutUsVideo();
 			// document.getElementById("feedback_icon").className="aboutUsButtons open";
 			// document.getElementById("feedback_selected_icon").className="aboutUsButtons closed";
 			leftPanelPurpleTrigger("ourResearch");
-			document.getElementById("iframe1").src="https://www.youtube.com/embed/FazkF5oQTU0?rel=0&amp;showinfo=0&autoplay=1";
 		}
 
 		function ourTeamClicked(){
@@ -1340,15 +1335,9 @@
 
 		function showAboutUsVideo(){
 			closeAllVideos()
-			// console.log(iframe1);
-			// iframe1.playVideo();
-			// iframe1.playVideo();
-			// var playButton = document.getElementById("our_research_icon");
-			// playButton.addEventListener("click", function(){player.playVideo();});
-			document.getElementById("iframe1").src="https://www.youtube.com/embed/FazkF5oQTU0?rel=0&amp;showinfo=0&autoplay=1";
 			document.getElementById("about_us_video").className = "open";
-			// document.getElementById("about_us").load();
-			// document.getElementById("about_us").play();
+			document.getElementById("about_us").load();
+			document.getElementById("about_us").play();
 		}
 
 		function closeVideo(videoName){
@@ -1377,9 +1366,6 @@
 				document.getElementById(id+"_video").className = "video_player closed";
 				document.getElementById(id).pause();
 			}
-			//iframe1.stopVideo();
-			document.getElementById("iframe1").src="https://www.youtube.com/embed/FazkF5oQTU0?rel=0&amp;showinfo=0";
-			// document.getElementById("iframe1").pauseVideo();
 			resetVideoIcons()
 		}
 
