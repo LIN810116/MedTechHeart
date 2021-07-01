@@ -2,6 +2,7 @@ import { SerialDecoder } from "./SerialDecoder";
 import { SensorReadResult } from "../../data/SensorReadResult";
 import { SerialReader } from "./SerialReader";
 import { SerialDecoderFactory } from "./SerialDecoderFactory";
+import { SerialHeartRateDecoder } from "./SerialHeartRateDecoder";
 
 class SerialService {
     public onSerialData?: (data: SensorReadResult) => void;
@@ -216,24 +217,17 @@ class SerialService {
             const serialReader = new SerialReader(this._reader);
 
             this._log('creating decoder..');
-            const serialValueForDecoder = await serialReader.readOnce();
-            const decoderSensorType = serialValueForDecoder.sensorType;
-
-            const decoder = SerialDecoderFactory.createDecoder(decoderSensorType);
+            
+            const decoder = new SerialHeartRateDecoder();
 
             this._log('starting loop..');
             this._isReading = true;
 
             while (this._isReading) {
               const serialValue = await serialReader.readOnce();
-              const decodedValues = decoder.decode(serialValue);
+              const decodedValues = await decoder.decode(serialValue);
 
               if (decodedValues) {
-                if (decoderSensorType !== decodedValues.sensorType) {
-                  this._err(`invalid sensor type. expecting ${decoderSensorType}, but got ${decodedValues.sensorType}. values: ${serialValue.rawValue}`);
-                  continue;
-                }
-
                 if ( this.onSerialData) {
                   this.onSerialData(decodedValues);
                 }

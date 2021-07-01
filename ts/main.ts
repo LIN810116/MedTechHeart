@@ -21,26 +21,16 @@ const convertToZincValue = (heartRateValue: number): number => {
 serialService.onSerialData = (decodedData: SensorReadResult) => {
     const values = decodedData.decodedValues as SensorDecodedValue[];
     
-    const val = values[0].value as HeartRateResult;
+    const val = values[0].value;
     const status = val.status;
-    const hrVal = val.value;
+    const hrVal = val.heartrate;
+    
+    $kiwriousValue.innerText = status;
 
-    switch(status) {
-        case HEART_RATE_RESULT_STATUS.TOO_HIGH: 
-            $kiwriousValue.innerText = 'too high';
-            break;
-        case HEART_RATE_RESULT_STATUS.TOO_LOW: 
-            $kiwriousValue.innerText = 'too low';
-            break;
-        case HEART_RATE_RESULT_STATUS.PROCESSING: 
-            $kiwriousValue.innerText = 'processing..';
-            break;
+    if (status === 'Ready') {
+        $kiwriousValue.innerText = hrVal.toString();
 
-        case HEART_RATE_RESULT_STATUS.READY: 
-            $kiwriousValue.innerText = hrVal.toString();
-
-            const zincValue = convertToZincValue(hrVal);
-            zincRenderer.setPlayRate(zincValue);
-            break;
+        const zincValue = convertToZincValue(hrVal);
+        zincRenderer.setPlayRate(zincValue);
     }
 }
