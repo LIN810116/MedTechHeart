@@ -8,9 +8,28 @@ const zincRenderer = (window as any).zincRenderer;
 const MAX_ZINC_VALUE = 5000;
 const MAX_HEARTRATE_VALUE = 100;
 
-document.getElementById('btn-kiwrious-connect').onclick = () => {
-    serialService.connectAndReadAsync();
+const $connect = document.getElementById('btn-kiwrious-connect') as HTMLButtonElement;
+const $disconnect = document.getElementById('btn-kiwrious-disconnect') as HTMLButtonElement;
+
+serialService.onSerialConnection = (isConnected: boolean) => {
+    $connect.style.display = isConnected? "none": "block";
+    $disconnect.style.display = isConnected?"block": "none";
+}
+
+$connect.onclick = async () => {
+    $connect.disabled = true;
+    await serialService.connectAndReadAsync();
+    $connect.disabled = false;
 };
+
+$disconnect.onclick = async () => {
+    $disconnect.disabled = true;
+    await serialService.disconnectAsync();
+    $disconnect.disabled = false;
+};
+
+$disconnect.style.display = "none";
+
 
 const $kiwriousValue = document.getElementById('kiwrious-value');
 
