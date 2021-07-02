@@ -26,11 +26,11 @@ export class SerialHeartRateDecoder extends SerialDecoder {
         // this._log('headers-footers', rawValue.header2Bytes, rawValue.footer2Bytes);
 
         const subArrays = array.map(i=> i.rawValue.subarray(6,22));
-        this._log('subArrays', subArrays);
+        // this._log('subArrays', subArrays);
 
         const rawData = SerialUtil.concatMultiArrays(subArrays);
-        this._log('rawData', rawData);
-        
+        // this._log('rawData', rawData);
+
         const heartRateResult = await this._detector.detectHeartRate(rawData);
 
         this._log('heartrate-result', heartRateResult);

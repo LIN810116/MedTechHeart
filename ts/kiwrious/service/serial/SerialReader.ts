@@ -66,7 +66,7 @@ export class SerialReader {
   async readMultiple(numberToRead: number = 10): Promise<SerialRawValue[]> {
     const array: SerialRawValue[]  = [];
     while (array.length < numberToRead) {
-      this._log('reading..')
+      // this._log('reading..')
       const value = await this._read();
       array.push(value);
     }
