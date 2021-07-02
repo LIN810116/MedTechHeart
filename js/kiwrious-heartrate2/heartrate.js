@@ -11,7 +11,7 @@ class HeartRateDetector {
 	machine = undefined;
 
 	async loadBinary() {
-		const req = await fetch('/js/kiwrious-heartrate2/prog.bin');
+		const req = await fetch('js/kiwrious-heartrate2/prog.bin');
 		const arrB = await req.arrayBuffer();
 		return new Uint8Array(arrB);
 	}

@@ -224,8 +224,8 @@ class SerialService {
             this._isReading = true;
 
             while (this._isReading) {
-              const serialValue = await serialReader.readOnce();
-              const decodedValues = await decoder.decode(serialValue);
+              const serialValues = await serialReader.readMultiple(10);
+              const decodedValues = await decoder.decode(serialValues);
 
               if (decodedValues) {
                 if ( this.onSerialData) {

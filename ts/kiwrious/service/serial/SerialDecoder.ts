@@ -13,6 +13,6 @@ export abstract class SerialDecoder {
         console.error("|SerialDecoder|", ...msg);
     }
 
-    abstract decode(rawValue: SerialRawValue): Promise<SensorReadResult>|null;
+    abstract decode(rawValue: SerialRawValue[]): Promise<SensorReadResult>|null;
 }
 

@@ -1,4 +1,5 @@
 import {SerialRawValue} from "./SerialRawValue";
+import { SerialUtil } from "./SerialUtil";
 
 const EXPECTED_ARRAY_SIZE = 26;
 
@@ -54,12 +55,25 @@ export class SerialReader {
     }
 
     //otherwise, append to array
-    this._array = SerialReader.concatArray(this._array, value);
+    this._array = SerialUtil.concatArray(this._array, value);
     //this._log('added to array. length:', this._array.length);
 
     //then read again (recursive)
     return await this.readOnce();
   }
+
+
+  async readMultiple(numberToRead: number = 10): Promise<SerialRawValue[]> {
+    const array: SerialRawValue[]  = [];
+    while (array.length < numberToRead) {
+      this._log('reading..')
+      const value = await this._read();
+      array.push(value);
+    }
+
+    return array;
+  }
+
 
   async readOnce(): Promise<SerialRawValue> {
     const value = await this._read();
@@ -70,11 +84,4 @@ export class SerialReader {
     return value;
   }
 
-  static concatArray(a: Uint8Array, b: Uint8Array): Uint8Array {
-    const c = new Uint8Array(a.length + b.length);
-    c.set(a, 0);
-    c.set(b, a.length);
-
-    return c;
-  }
 }

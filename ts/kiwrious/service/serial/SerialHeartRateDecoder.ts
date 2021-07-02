@@ -3,6 +3,7 @@ import { SensorReadResult } from "../../data/SensorReadResult";
 import { HeartRateProcessor, HeartRateResult } from "./HeartRateProcessor";
 import { SerialDecoder } from "./SerialDecoder";
 import { SENSOR_VALUE, SerialRawValue } from "./SerialRawValue";
+import { SerialUtil } from "./SerialUtil";
 
 export class SerialHeartRateDecoder extends SerialDecoder {
     _processor: HeartRateProcessor;
@@ -21,10 +22,15 @@ export class SerialHeartRateDecoder extends SerialDecoder {
         console.log('|SerialHeartRateDecoder|', ...msg);
     }
 
-    async decode(rawValue: SerialRawValue): Promise<SensorReadResult>|null {
+    async decode(array: SerialRawValue[]): Promise<SensorReadResult>|null {
         // this._log('headers-footers', rawValue.header2Bytes, rawValue.footer2Bytes);
 
-        const rawData = rawValue.rawValue.subarray(6,22);
+        const subArrays = array.map(i=> i.rawValue.subarray(6,22));
+        this._log('subArrays', subArrays);
+
+        const rawData = SerialUtil.concatMultiArrays(subArrays);
+        this._log('rawData', rawData);
+        
         const heartRateResult = await this._detector.detectHeartRate(rawData);
 
         this._log('heartrate-result', heartRateResult);
@@ -32,7 +38,7 @@ export class SerialHeartRateDecoder extends SerialDecoder {
         const value0: SensorDecodedValue = { label: SENSOR_VALUE.HEART_RATE, value: heartRateResult, type: "object" };
 
         const result: SensorReadResult = {
-            sensorType: rawValue.sensorType,
+            sensorType: array[0].sensorType,
             decodedValues: [value0]
         };
 
