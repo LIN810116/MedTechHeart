@@ -60,13 +60,7 @@ export class SerialRawValue {
 
     get sensorType(): string {
         switch (this.sensorTypeRaw) {
-            case 1: return SENSOR_TYPE.UV;
-            case 2: return SENSOR_TYPE.TEMPERATURE;
-            case 4: return SENSOR_TYPE.CONDUCTIVITY;
-            case 5: return SENSOR_TYPE.HEART_RATE;
-            case 6: return SENSOR_TYPE.VOC;
-            case 7: return SENSOR_TYPE.HUMIDITY;
-            case 9: return SENSOR_TYPE.TEMPERATURE2;
+            case 10: return SENSOR_TYPE.HEART_RATE;
             // TODO OTHER SENSORS
 
             default:
