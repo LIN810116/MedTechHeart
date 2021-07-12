@@ -6,8 +6,8 @@ import serialService from './kiwrious/service/serial/SerialService';
 const zincRenderer = (window as any).zincRenderer;
 const speedSlider = <HTMLInputElement> document.getElementById("speed_slider");
 
-const MAX_ZINC_VALUE = 5000;
-const MAX_HEARTRATE_VALUE = 150;
+const MAX_ZINC_VALUE = 6000;
+const MAX_HEARTRATE_VALUE = 120;
 
 const $connect = document.getElementById('btn-kiwrious-connect') as HTMLButtonElement;
 const $disconnect = document.getElementById('btn-kiwrious-disconnect') as HTMLButtonElement;
