@@ -4,6 +4,7 @@ import { HeartRateResult, HEART_RATE_RESULT_STATUS } from './kiwrious/service/se
 import serialService from './kiwrious/service/serial/SerialService';
 
 const zincRenderer = (window as any).zincRenderer;
+const speedSlider = <HTMLInputElement> document.getElementById("speed_slider");
 
 const MAX_ZINC_VALUE = 5000;
 const MAX_HEARTRATE_VALUE = 150;
@@ -51,5 +52,7 @@ serialService.onSerialData = (decodedData: SensorReadResult) => {
 
         const zincValue = convertToZincValue(hrVal);
         zincRenderer.setPlayRate(zincValue);
+
+        speedSlider.value = String(zincValue);
     }
 }
