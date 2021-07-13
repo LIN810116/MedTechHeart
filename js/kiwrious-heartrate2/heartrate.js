@@ -51,7 +51,7 @@ class HeartRateDetector {
 		} else if (status === 48) {
 			statusString = 'Ready';
 		} else if (status === 0) {
-			statusString = 'Calcualting';
+			statusString = 'Calculating';
 		} else {
 			statusString = 'Unknown';
 		}
